@@ -63,3 +63,5 @@ group :test do
 end
 
 gem "telegram-bot-ruby", "~> 2.2"
+
+gem "dotenv-rails", groups: [ :development, :test ]

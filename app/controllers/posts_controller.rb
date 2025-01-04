@@ -22,19 +22,21 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = Post.new(post_params)
-    if @post.save
-      PublishToTelegramService.new(@post).call
-      redirect_to @post, notice: "Пост успішно створено."
-    else
-      render :new
+
+    respond_to do |format|
+      if @post.save
+        # Add this line to send a message to Telegram
+        PublishToTelegramService.new(@post).call
+
+        format.html { redirect_to @post, notice: "Post was successfully created." }
+        format.json { render :show, status: :created, location: @post }
+      else
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
     end
   end
 
-  private
-
-  def post_params
-    params.require(:post).permit(:title, :content)
-  end
 
 
   # PATCH/PUT /posts/1 or /posts/1.json
