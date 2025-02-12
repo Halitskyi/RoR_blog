@@ -62,6 +62,6 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "telegram-bot-ruby", "~> 2.2"
+gem "telegram-bot-ruby", "~> 2.3"
 
 gem "dotenv-rails", groups: [ :development, :test ]
